@@ -27,20 +27,17 @@ sys.path.append('/content/drive/MyDrive/code/MDL/')
 Code and Paper source: 
 | Code      | Paper |  Journal |  Year | 
 | ----------- | ----------- |----------- |----------- |
-
-| [morphFormer](https://github.com/danfenghong/IEEE_GRSL_EndNet)      | [Spectral–Spatial Morphological Attention Transformer for Hyperspectral Image Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10036472)       | 2023       | 
-| [DBCTNet](https://github.com/danfenghong/IEEE_GRSL_EndNet)      | Title       | Title       | 
-
-
-| [EndNet](https://github.com/danfenghong/IEEE_GRSL_EndNet)      | Title       | Title       | Title       |
-| [MDL](https://github.com/danfenghong/IEEE_TGRS_MDL-RS)   | Text        | Title       |
-| [HCTNet](https://github.com/zgr6010/Fusion_HCT)   | [Paper](https://ieeexplore.ieee.org/document/9999457)        | TGRS       | 2022       |
-| [FusAtNet](https://github.com/ShivamP1993/FusAtNet-Dual-Attention-based-SpectroSpatial-Multimodal-Fusion-Network-for-Hyperspectral-and-LiDAR-)   | Text        | CVPR        | 2020       |
-| [S2ENet](https://github.com/likyoo/Multimodal-Remote-Sensing-Toolkit)   | Text        | Title       | Title       |
-| [Cross-HL](https://github.com/AtriSukul1508/Cross-HL)  | [Paper](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10462184)        | Title       | Title       |
-| [MIViT](https://github.com/icey-zhang/MIViT)   | Text        | Title       | Title       |
-| [MS2CANet](https://github.com/junhengzhu/MS2CANet)   | Text        | Title       | Title       |
-| [SHNet](https://github.com/quanweiliu/SHNet)   | Text        | Title       | Title       |
+| [morphFormer](https://github.com/mhaut/morphFormer)      | [Spectral–Spatial Morphological Attention Transformer for Hyperspectral Image Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10036472)       | TGRS       | 2023       | 
+| [DBCTNet](https://github.com/danfenghong/IEEE_GRSL_EndNet)      | [DBCTNet: Double Branch Convolution-Transformer Network for Hyperspectral Image Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10440601)       | TGRS       | 2024       | 
+| [EndNet](https://github.com/danfenghong/IEEE_GRSL_EndNet)      | [Deep Encoder-Decoder Networks for Classification of Hyperspectral and LiDAR Data](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/9179756)       | TGRSL       | 2020       |
+| [MDL](https://github.com/danfenghong/IEEE_TGRS_MDL-RS)   | [More Diverse Means Better: Multimodal Deep Learning Meets Remote-Sensing Imagery Classification](https://ieeexplore.ieee.org/document/9174822)        | TGRS       |  2021 |
+| [HCTNet](https://github.com/zgr6010/Fusion_HCT)   | [Spectral–Spatial Feature Tokenization Transformer for Hyperspectral Image Classification](https://ieeexplore.ieee.org/document/9999457)        | TGRS       | 2022       |
+| [FusAtNet](https://github.com/ShivamP1993/FusAtNet-Dual-Attention-based-SpectroSpatial-Multimodal-Fusion-Network-for-Hyperspectral-and-LiDAR-)   | [FusAtNet: Dual Attention based SpectroSpatial Multimodal Fusion Network for Hyperspectral and LiDAR Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/9150738)        | CVPR        | 2020       |
+| [S2ENet](https://github.com/likyoo/Multimodal-Remote-Sensing-Toolkit)   | [S²ENet: Spatial–Spectral Cross-Modal Enhancement Network for Classification of Hyperspectral and LiDAR Data]()        | TGRSL       | 2022       |
+| [Cross-HL](https://github.com/AtriSukul1508/Cross-HL)  | [Cross Hyperspectral and LiDAR Attention Transformer: An Extended Self-Attention for Land Use and Land Cover Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10462184)        | TGRS       | 2024       |
+| [MIViT](https://github.com/icey-zhang/MIViT)   | [Multimodal Informative ViT: Information Aggregation and Distribution for Hyperspectral and LiDAR Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10464367)        | TCSVT       | 2024       |
+| [MS2CANet](https://github.com/junhengzhu/MS2CANet)   | [MS2CANet: Multiscale Spatial–Spectral Cross-Modal Attention Network for Hyperspectral Image and LiDAR Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10382694/)        | 2024       | 
+| [SHNet](https://github.com/quanweiliu/SHNet)   | Enhancing Oil Spill Detection with Controlled Random Sampling: A Multimodal Fusion Approach Using SAR and HSI Imagery        | RSA       | 2025       |
 
 
 This repository proposed a new taxonomy to descibe existed patch based image classification (semantic segmenation) models.
