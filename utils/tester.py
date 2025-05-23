@@ -64,6 +64,7 @@ def linear_test_SD_SSISO(net, net_head, criterion, data_loader, args, groundTrut
     net_head.eval()
     with torch.no_grad():
         for data, target in data_loader:
+        # for data, _, target in data_loader:
             target = target - 1
             data = data.to(args.device)
             target = target.to(args.device)
@@ -95,6 +96,7 @@ def linear_test_SD_SSISO2(net, criterion, data_loader, args, groundTruth=None, v
     net.eval()
     with torch.no_grad():
         for data, target in data_loader:
+        # for data, _, target in data_loader:
             target = target - 1
             data = data.to(args.device)
             target = target.to(args.device)
@@ -549,7 +551,8 @@ def linear_visualation_SD_SSISO(net, net_head, data_loader, args, groundTruth=No
     net.eval()
     net_head.eval()
     with torch.no_grad():
-        for data, _, target in data_loader:
+        for data, target in data_loader:
+        # for data, _, target in data_loader:
             target = target - 1
             data = data.to(args.device)
             target = target.to(args.device)
@@ -591,6 +594,7 @@ def linear_visualation_SD_SSISO2(net, data_loader, args, groundTruth=None, visul
     net.eval()
     with torch.no_grad():
         for data, target in data_loader:
+        # for data, _, target in data_loader:
             target = target - 1
             data = data.to(args.device)
             target = target.to(args.device)

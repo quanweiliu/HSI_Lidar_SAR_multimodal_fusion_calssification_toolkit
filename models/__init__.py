@@ -18,6 +18,19 @@ def get_model_config(args):
 		args.step_size = 30
 		args.gamma = 0.7
 
+	elif args.backbone == "mamba":
+		args.epochs = 100
+		args.batch_size = 64
+		args.patch_size = 12
+		args.randomCrop = 8
+		args.pca = True
+		args.components = 15    
+		args.learning_rate = 0.001
+		##### original version no step_size and gamma
+		args.schedule = True
+		args.step_size = 30
+		args.gamma = 0.7
+
 	if args.backbone == "ViTDGCN":
 		args.data_augmentation = False
 		args.randomCrop = None
@@ -54,68 +67,54 @@ def get_model_config(args):
 		# args.step_size = 30
 		# args.gamma = 0.5
 
-
 	elif args.backbone == "morphFormer":
-		# args.epochs = 500
-		# args.data_augmentation = False
-		# args.randomCrop = None
-		# args.batch_size = 64
-		# args.patch_size = 11
-		# args.pca = False
-		# # args.components = 0
-		# args.learning_rate = 5e-4
-		# args.weight_decay = 5e-3
-		# args.schedule = False
-		# args.FM = 16
-		# args.HSIOnly = True
-		# args.testSizeNumber = 100
-		# args.schedule = True
-		# args.step_size = 50
-		# args.gamma = 0.9
-
-
-		args.epochs = 100
-		args.data_augmentation = True
-		# args.randomCrop = 11
-		args.batch_size = 256
-		args.patch_size = 13
+		args.epochs = 500
+		args.data_augmentation = False
+		args.randomCrop = None
+		args.batch_size = 64
+		args.patch_size = 11
 		args.pca = False
-		args.components = 0
-		args.learning_rate = 1e-3
-		args.weight_decay = 1e-4
+		# args.components = 0
+		args.learning_rate = 5e-4
+		args.weight_decay = 5e-3
 		args.FM = 16
 		args.HSIOnly = True
 		args.testSizeNumber = 100
 		args.schedule = True
-		args.step_size = 30
-		args.gamma = 0.7
+		args.step_size = 50
+		args.gamma = 0.9
+
+		# args.epochs = 100
+		# args.data_augmentation = True
+		# # args.randomCrop = 11
+		# args.batch_size = 256
+		# args.patch_size = 13
+		# args.pca = False
+		# args.components = 0
+		# args.learning_rate = 1e-3
+		# args.weight_decay = 1e-4
+		# args.FM = 16
+		# args.HSIOnly = True
+		# args.testSizeNumber = 100
+		# args.schedule = True
+		# args.step_size = 30
+		# args.gamma = 0.7
 
 	elif args.backbone == "DBCTNet":
-		args.epochs = 100
+		args.epochs = 300
+		# args.epochs = 500
+		# args.epochs = 600
 		args.batch_size = 128
 		args.patch_size = 9
 		args.pca = False
 		args.components = 0    
 		args.learning_rate = 0.001
 		args.weight_decay = 0.001
+		args.gammaF = 0.4
 		##### original version no step_size and gamma
 		args.schedule = True
 		args.step_size = 30
 		args.gamma = 0.7
-		
-	elif args.backbone == "mamba":
-		args.epochs = 100
-		args.batch_size = 64
-		args.patch_size = 12
-		args.randomCrop = 8
-		args.pca = True
-		args.components = 15    
-		args.learning_rate = 0.001
-		##### original version no step_size and gamma
-		args.schedule = True
-		args.step_size = 30
-		args.gamma = 0.7
-
 
 	elif args.backbone == "MDL_M" or args.backbone == "MDL_L" or \
 		args.backbone == "MDL_E_D" or args.backbone == "MDL_C":
@@ -129,7 +128,6 @@ def get_model_config(args):
 		args.schedule = True
 		args.step_size = 30
 		args.gamma = 0.5
-
 
 	elif args.backbone == "FusAtNet":
 		args.epochs = 1000

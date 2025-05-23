@@ -26,17 +26,13 @@ def get_data(args):
         data, GT = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data=None)
         # print("data", data.shape, "data_gt", data_gt.shape)
         
-        # if args.backbone in args.MSSM:
-        #     patch_size = args.patch_size * 3
-        # else:
-        #     patch_size = args.patch_size
         patch_size = args.patch_size
-        pad_width = patch_size // 2
+        pad_width = (patch_size // 2) + 1
+        # pad_width = patch_size // 2
 
-        img = np.pad(data, pad_width=pad_width, mode="constant", constant_values=(0))        # 111104
-
-        img = img[:, :, pad_width:img.shape[2]-pad_width]
-        # print("img", img.shape)
+        # img = np.pad(data, pad_width=pad_width, mode="constant", constant_values=(0))
+        # img = img[:, :, pad_width:img.shape[2]-pad_width]
+        img = np.pad(data, ((pad_width, pad_width), (pad_width, pad_width), (0,0)), 'symmetric')
 
         if args.pca:
             print("pca is used")
@@ -45,122 +41,63 @@ def get_data(args):
             print("pca is not used")
 
 
-
         data_gt = np.pad(GT, pad_width=pad_width, mode="constant", constant_values=(0))
-
         train_gt, test_gt = sample_gt(data_gt, train_num=args.train_num, 
                                 train_ratio=args.train_ratio, mode=args.split_type)
+        train_gt, val_gt = sample_gt(train_gt, train_num=args.train_num, 
+                                train_ratio=0.5, mode="ratio")
         # print("train_gt", train_gt.shape, "test_gt", test_gt.shape)
 
 
         if args.show_gt:
             # data_reader.draw(data_gt, args.result_dir + "/" + args.dataset_name + "data_gt", save_img=True)
             plt.figure(figsize=(12, 8))
-            spl.imshow(classes=data_gt)
+            # spl.imshow(classes=GT)
             spl.imshow(classes=train_gt)
-            spl.imshow(classes=test_gt)
+            # spl.imshow(classes=test_gt)
             # plt.imshow(out)
             plt.axis('off')  # 关闭坐标轴（等效于关闭刻度和边框）
             plt.tight_layout(pad=0)  # 去除额外空白边距
             plt.show()
 
         # obtain label
-        train_label, test_label = [], []
-        for i in range(pad_width, train_gt.shape[0]-pad_width):
-            for j in range(pad_width, train_gt.shape[1]-pad_width):
-                if train_gt[i][j]:
-                    train_label.append(train_gt[i][j])
+        # train_label, test_label = [], []
+        # for i in range(pad_width, train_gt.shape[0]-pad_width):
+        #     for j in range(pad_width, train_gt.shape[1]-pad_width):
+        #         if train_gt[i][j]:
+        #             train_label.append(train_gt[i][j])
 
-        for i in range(pad_width, test_gt.shape[0]-pad_width):
-            for j in range(pad_width, test_gt.shape[1]-pad_width):
-                if test_gt[i][j]:
-                    test_label.append(test_gt[i][j])
-        # len(test_label)
+        # for i in range(pad_width, test_gt.shape[0]-pad_width):
+        #     for j in range(pad_width, test_gt.shape[1]-pad_width):
+        #         if test_gt[i][j]:
+        #             test_label.append(test_gt[i][j])
         
         if args.print_data_info:
             print("print_data_info : ---->")
-            data_reader.data_info(train_gt, test_gt, start=args.data_info_start)
+            data_reader.data_info(train_gt, val_gt, test_gt, start=args.data_info_start)
 
-        return img, train_gt, test_gt, GT
+        return img, train_gt, val_gt, test_gt, data_gt, GT
 
-
-    # elif args.dataset_name in args.MD:
-    #     data1, data2, data_gt = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data="GT")
-    #     data1, data2, train_gt = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data="TRLabel")
-    #     data1, data2, test_gt = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data="TSLabel")
-    #     # split_data.data_info(data_gt, class_num=np.max(data_gt))
-
-    #     if args.backbone in args.MMISO or args.backbone in args.MMIMO:
-    #         patch_size = args.patch_size * 3
-    #     else:
-    #         patch_size = args.patch_size
-    #     pad_width = patch_size // 2
-    #     img1 = np.pad(data1, pad_width=pad_width, mode="constant", constant_values=(0))
-    #     img2 = np.pad(data2, pad_width=pad_width, mode="constant", constant_values=(0))
-    #     img1 = img1[:, :, pad_width:img1.shape[2]-pad_width]
-    #     img2 = img2[:, :, pad_width:img2.shape[2]-pad_width]
-    #     # print(img1.shape, img2.shape)
-
-    #     if args.pca:
-    #         print("pca is used")
-    #         img1, pca = data_reader.apply_PCA(img1, num_components=args.components)
-    #     else:
-    #         print("pca is not used")
-
-    #     if args.show_gt:
-    #         data_reader.draw(data_gt, args.result_dir + "/" + args.dataset_name + "data_gt", save_img=True)
-    #         data_reader.draw(train_gt, args.result_dir + "/" + args.dataset_name + "train_gt", save_img=True)
-    #         data_reader.draw(test_gt, args.result_dir + "/" + args.dataset_name + "test_gt", save_img=True)
-    #         spy.imshow(classes=data_gt)
-    #         spy.imshow(classes=train_gt)
-    #         spy.imshow(classes=test_gt)
-
-    #     # data_gt = np.pad(data_gt, pad_width=pad_width, mode="constant", constant_values=(0))
-    #     train_gt = np.pad(train_gt, pad_width=pad_width, mode="constant", constant_values=(0))
-    #     test_gt = np.pad(test_gt, pad_width=pad_width, mode="constant", constant_values=(0))
-
-    #     # data_gt, _ = sample_gt(data_gt, train_num=args.train_num, 
-    #     #                         train_ratio=args.train_ratio, mode=args.split_type)
-    #     train_gt, _ = sample_gt(train_gt, train_num=args.train_num, 
-    #                             train_ratio=args.train_ratio, mode=args.split_type)
-    #     test_gt, _ = sample_gt(test_gt, train_num=args.train_num, 
-    #                             train_ratio=args.train_ratio, mode=args.split_type)   
-    #     # print("train_gt", train_gt.shape, "test_gt", test_gt.shape)
-
-    #     # obtain label
-    #     train_label, test_label = [], []
-    #     for i in range(pad_width, train_gt.shape[0]-pad_width):
-    #         for j in range(pad_width, train_gt.shape[1]-pad_width):
-    #             if train_gt[i][j]:
-    #                 train_label.append(train_gt[i][j])
-
-    #     for i in range(pad_width, test_gt.shape[0]-pad_width):
-    #         for j in range(pad_width, test_gt.shape[1]-pad_width):
-    #             if test_gt[i][j]:
-    #                 test_label.append(test_gt[i][j])
-    #     # len(test_label)
-        
-    #     if args.print_data_info:
-    #         print("print_data_info : ---->")
-    #         data_reader.data_info(train_gt, test_gt, start=args.data_info_start)
-
-    #     return img1, img2, train_gt, test_gt, data_gt
 
     elif args.dataset_name in args.MD:
-        data1, data2, data_gt = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data="GT")
+        data1, data2, GT = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data="GT")
         data1, data2, train_gt = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data="TRLabel")
         data1, data2, test_gt = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data="TSLabel")
-        # split_data.data_info(data_gt, class_num=np.max(data_gt))
+        # print("data", data.shape, "data_gt", data_gt.shape)
 
         if args.backbone in args.MMISO or args.backbone in args.MMIMO:
             patch_size = args.patch_size * 3
         else:
             patch_size = args.patch_size
-        pad_width = patch_size // 2
-        img1 = np.pad(data1, pad_width=pad_width, mode="constant", constant_values=(0))
-        img2 = np.pad(data2, pad_width=pad_width, mode="constant", constant_values=(0))
-        img1 = img1[:, :, pad_width:img1.shape[2]-pad_width]
-        img2 = img2[:, :, pad_width:img2.shape[2]-pad_width]
+        pad_width = (patch_size // 2) + 1
+        # pad_width = patch_size // 2
+
+        img1 = np.pad(data1, ((pad_width, pad_width), (pad_width, pad_width), (0,0)), 'symmetric')
+        img2 = np.pad(data2, ((pad_width, pad_width), (pad_width, pad_width), (0,0)), 'symmetric')
+        # img1 = np.pad(data1, pad_width=pad_width, mode="constant", constant_values=(0))
+        # img2 = np.pad(data2, pad_width=pad_width, mode="constant", constant_values=(0))
+        # img1 = img1[:, :, pad_width:img1.shape[2]-pad_width]
+        # img2 = img2[:, :, pad_width:img2.shape[2]-pad_width]
         # print(img1.shape, img2.shape)
 
         if args.pca:
@@ -170,14 +107,17 @@ def get_data(args):
             print("pca is not used")
 
         if args.show_gt:
-            data_reader.draw(data_gt, args.result_dir + "/" + args.dataset_name + "data_gt", save_img=True)
-            data_reader.draw(train_gt, args.result_dir + "/" + args.dataset_name + "train_gt", save_img=True)
-            data_reader.draw(test_gt, args.result_dir + "/" + args.dataset_name + "test_gt", save_img=True)
-            spy.imshow(classes=data_gt)
-            spy.imshow(classes=train_gt)
-            spy.imshow(classes=test_gt)
+            # data_reader.draw(data_gt, args.result_dir + "/" + args.dataset_name + "data_gt", save_img=True)
+            plt.figure(figsize=(12, 8))
+            # spl.imshow(classes=GT)
+            spl.imshow(classes=train_gt)
+            # spl.imshow(classes=test_gt)
+            # plt.imshow()
+            plt.axis('off')  # 关闭坐标轴（等效于关闭刻度和边框）
+            plt.tight_layout(pad=0)  # 去除额外空白边距
+            plt.show()
 
-        # data_gt = np.pad(data_gt, pad_width=pad_width, mode="constant", constant_values=(0))
+        data_gt = np.pad(data_gt, pad_width=pad_width, mode="constant", constant_values=(0))
         train_gt = np.pad(train_gt, pad_width=pad_width, mode="constant", constant_values=(0))
         test_gt = np.pad(test_gt, pad_width=pad_width, mode="constant", constant_values=(0))
 
@@ -186,34 +126,33 @@ def get_data(args):
         train_gt, val_gt = sample_gt(train_gt, train_num=args.train_num, 
                                 train_ratio=args.train_ratio, mode=args.split_type)
         test_gt, _ = sample_gt(test_gt, train_num=args.train_num, 
-                                train_ratio=args.train_ratio, mode=args.split_type)   
+                                train_ratio=1, mode="ratio")   
         # print("train_gt", train_gt.shape, "test_gt", test_gt.shape)
 
         # obtain label
-        train_label, test_label = [], []
-        for i in range(pad_width, train_gt.shape[0]-pad_width):
-            for j in range(pad_width, train_gt.shape[1]-pad_width):
-                if train_gt[i][j]:
-                    train_label.append(train_gt[i][j])
+        # train_label, test_label = [], []
+        # for i in range(pad_width, train_gt.shape[0]-pad_width):
+        #     for j in range(pad_width, train_gt.shape[1]-pad_width):
+        #         if train_gt[i][j]:
+        #             train_label.append(train_gt[i][j])
 
 
-        for i in range(pad_width, val_gt.shape[0]-pad_width):
-            for j in range(pad_width, val_gt.shape[1]-pad_width):
-                if val_gt[i][j]:
-                    train_label.append(val_gt[i][j])
+        # for i in range(pad_width, val_gt.shape[0]-pad_width):
+        #     for j in range(pad_width, val_gt.shape[1]-pad_width):
+        #         if val_gt[i][j]:
+        #             train_label.append(val_gt[i][j])
 
 
-        for i in range(pad_width, test_gt.shape[0]-pad_width):
-            for j in range(pad_width, test_gt.shape[1]-pad_width):
-                if test_gt[i][j]:
-                    test_label.append(test_gt[i][j])
-        # len(test_label)
+        # for i in range(pad_width, test_gt.shape[0]-pad_width):
+        #     for j in range(pad_width, test_gt.shape[1]-pad_width):
+        #         if test_gt[i][j]:
+        #             test_label.append(test_gt[i][j])
         
         if args.print_data_info:
             print("print_data_info : ---->")
             data_reader.data_info(train_gt, val_gt, test_gt, start=args.data_info_start)
 
-        return img1, img2, train_gt, val_gt, test_gt, data_gt
+        return img1, img2, train_gt, val_gt, test_gt, data_gt, GT
 
 # 单模态，多模态，单尺度
 class HyperX(torch.utils.data.Dataset):
@@ -248,8 +187,8 @@ class HyperX(torch.utils.data.Dataset):
         self.indices = np.array(
             [
                 (x, y) for x, y in zip(x_pos, y_pos)
-                # if x > p and x < data.shape[0] - p and y > p and y < data.shape[1] - p
-                if x >= p and x < data1.shape[0] - p and y >= p and y < data1.shape[1] - p
+                if x > p and x < data1.shape[0] - p - 1 and y > p and y < data1.shape[1] - p - 1
+                # if x >= p and x < data1.shape[0] - p and y >= p and y < data1.shape[1] - p
             ]
         )
         self.labels = [self.label[x, y] for x, y in self.indices]

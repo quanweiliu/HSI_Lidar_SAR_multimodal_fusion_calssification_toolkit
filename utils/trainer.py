@@ -68,6 +68,7 @@ def train_SD_SSISO(epoch, net, net_head, criterion, train_loader, test_loader, t
     net.train()
     net_head.train()
     for pos_1, label in train_loader:
+    # for pos_1, _, label in train_loader:
 
         label = label - 1
         pos_1, label = pos_1.to(args.device), label.to(args.device)
@@ -89,7 +90,9 @@ def train_SD_SSISO(epoch, net, net_head, criterion, train_loader, test_loader, t
         net.eval()
         net_head.eval()
         for t_pos_1, t_label in test_loader:
+        # for t_pos_1, _, t_label in test_loader:
             with torch.no_grad():
+
                 t_label = t_label - 1
                 t_pos_1, t_label = t_pos_1.to(args.device), t_label.to(args.device)
                 out_e = net_head(net(t_pos_1))
@@ -101,10 +104,11 @@ def train_SD_SSISO(epoch, net, net_head, criterion, train_loader, test_loader, t
         # print("linear test_accuracy", round(test_accuracy.item(), 4)) 
     else:
         test_accuracy = 0.0
+
     train_time = time.time() - start_time
     print('Train Epoch: [{}/{}] Loss: {:.4f} TRA: {:.4f} TEA: {:.4f} TIME: {:.4f}'.format(\
                     epoch, args.epochs, round(average_loss, 4), round(train_accuracy, 4), \
-                        round(test_accuracy, 4), round(train_time, 2)))
+                    round(test_accuracy, 4), round(train_time, 2)))
     
     return round(average_loss, 4), round(train_accuracy, 4), test_accuracy, round(train_time, 2)
 
@@ -119,6 +123,7 @@ def train_SD_SSISO2(epoch, net, criterion, train_loader, test_loader, train_opti
     start_time = time.time()
     net.train()
     for pos_1, label in train_loader:
+    # for pos_1, _, label in train_loader:
 
         label = label - 1
         pos_1, label = pos_1.to(args.device), label.to(args.device)
@@ -139,7 +144,9 @@ def train_SD_SSISO2(epoch, net, criterion, train_loader, test_loader, train_opti
     if epoch % args.log_interval == 0:
         net.eval()
         for t_pos_1, t_label in test_loader:
+        # for t_pos_1, _, t_label in test_loader:
             with torch.no_grad():
+
                 t_label = t_label - 1
                 t_pos_1, t_label = t_pos_1.to(args.device), t_label.to(args.device)
                 out_e = net(t_pos_1)
@@ -151,10 +158,11 @@ def train_SD_SSISO2(epoch, net, criterion, train_loader, test_loader, train_opti
         # print("linear test_accuracy", round(test_accuracy.item(), 4)) 
     else:
         test_accuracy = 0.0
+        
     train_time = time.time() - start_time
     print('Train Epoch: [{}/{}] Loss: {:.4f} TRA: {:.4f} TEA: {:.4f} TIME: {:.4f}'.format(\
                     epoch, args.epochs, round(average_loss, 4), round(train_accuracy, 4), \
-                        round(test_accuracy, 4), round(train_time, 2)))
+                    round(test_accuracy, 4), round(train_time, 2)))
     
     return round(average_loss, 4), round(train_accuracy, 4), test_accuracy, round(train_time, 2)
 
