@@ -56,22 +56,53 @@ def get_model_config(args):
 
 
 	elif args.backbone == "morphFormer":
-		args.epochs = 500
-		args.data_augmentation = False
-		args.randomCrop = None
-		args.batch_size = 64
-		args.patch_size = 11
+		# args.epochs = 500
+		# args.data_augmentation = False
+		# args.randomCrop = None
+		# args.batch_size = 64
+		# args.patch_size = 11
+		# args.pca = False
+		# # args.components = 0
+		# args.learning_rate = 5e-4
+		# args.weight_decay = 5e-3
+		# args.schedule = False
+		# args.FM = 16
+		# args.HSIOnly = True
+		# args.testSizeNumber = 100
+		# args.schedule = True
+		# args.step_size = 50
+		# args.gamma = 0.9
+
+
+		args.epochs = 100
+		args.data_augmentation = True
+		# args.randomCrop = 11
+		args.batch_size = 256
+		args.patch_size = 13
 		args.pca = False
-		# args.components = 30
-		args.learning_rate = 5e-4
-		args.schedule = False
+		args.components = 0
+		args.learning_rate = 1e-3
+		args.weight_decay = 1e-4
 		args.FM = 16
 		args.HSIOnly = True
 		args.testSizeNumber = 100
-		# args.step_size = 30
-		# args.gamma = 0.5
+		args.schedule = True
+		args.step_size = 30
+		args.gamma = 0.7
 
-
+	elif args.backbone == "DBCTNet":
+		args.epochs = 100
+		args.batch_size = 128
+		args.patch_size = 9
+		args.pca = False
+		args.components = 0    
+		args.learning_rate = 0.001
+		args.weight_decay = 0.001
+		##### original version no step_size and gamma
+		args.schedule = True
+		args.step_size = 30
+		args.gamma = 0.7
+		
 	elif args.backbone == "mamba":
 		args.epochs = 100
 		args.batch_size = 64
