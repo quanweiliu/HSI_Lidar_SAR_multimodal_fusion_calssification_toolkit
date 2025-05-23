@@ -27,8 +27,10 @@ sys.path.append('/content/drive/MyDrive/code/MDL/')
 Code and Paper source: 
 | Code      | Paper |  Journal |  Year | 
 | ----------- | ----------- |----------- |----------- |
+||**Single modality models**||
 | [morphFormer](https://github.com/mhaut/morphFormer)      | [Spectral–Spatial Morphological Attention Transformer for Hyperspectral Image Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10036472)       | TGRS       | 2023       | 
 | [DBCTNet](https://github.com/danfenghong/IEEE_GRSL_EndNet)      | [DBCTNet: Double Branch Convolution-Transformer Network for Hyperspectral Image Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10440601)       | TGRS       | 2024       | 
+||**Multimodal models**||
 | [EndNet](https://github.com/danfenghong/IEEE_GRSL_EndNet)      | [Deep Encoder-Decoder Networks for Classification of Hyperspectral and LiDAR Data](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/9179756)       | TGRSL       | 2020       |
 | [MDL](https://github.com/danfenghong/IEEE_TGRS_MDL-RS)   | [More Diverse Means Better: Multimodal Deep Learning Meets Remote-Sensing Imagery Classification](https://ieeexplore.ieee.org/document/9174822)        | TGRS       |  2021 |
 | [HCTNet](https://github.com/zgr6010/Fusion_HCT)   | [Spectral–Spatial Feature Tokenization Transformer for Hyperspectral Image Classification](https://ieeexplore.ieee.org/document/9999457)        | TGRS       | 2022       |
