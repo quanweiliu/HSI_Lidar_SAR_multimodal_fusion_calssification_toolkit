@@ -1,14 +1,3 @@
-这个版本改成 Linux 版本，需要更改的内容：
-
-- 导入包
-!pip install spectral
-from google.colab import drive
-drive.mount('/content/drive')
-
-- 添加环境变量
-sys.path.append('/content/drive/MyDrive/code/MDL/')
-
-
 
 
 <!--Code and Paper source: 
@@ -24,7 +13,7 @@ sys.path.append('/content/drive/MyDrive/code/MDL/')
 --> 
 
 
-Code and Paper source: 
+# Summary
 | Code      | Paper |  Journal |  Year | 
 | ----------- | ----------- |----------- |----------- |
 ||**Single modality models**||
@@ -41,7 +30,7 @@ Code and Paper source:
 | [MS2CANet](https://github.com/junhengzhu/MS2CANet)   | [MS2CANet: Multiscale Spatial–Spectral Cross-Modal Attention Network for Hyperspectral Image and LiDAR Classification](https://ieeexplore-ieee-org.elibrary.jcu.edu.au/document/10382694/)        | TGRSL       | 2024       | 
 | [SHNet](https://github.com/quanweiliu/SHNet)   | Enhancing Oil Spill Detection with Controlled Random Sampling: A Multimodal Fusion Approach Using SAR and HSI Imagery        | RSA       | 2025       |
 
-
+# Description
 This repository proposed a new taxonomy to descibe existed patch based image classification (semantic segmenation) models.
 
 Based the input and output of the model, we categorized these pixel-level classification model into singlesacle singlemodality input and singleoutput (SSISO), singlesacle multimodelity input and singleoutput (SMISO), singlesacle multimodelity input and multioutput (SMIMO), mutlisacle multimodelity input and singleoutput (MMISO), mutlisacle multimodelity input and multiouput (MMIMO).
@@ -50,6 +39,44 @@ Of course, there are multiscale singlemodality input, singleoutput (MSISO) and m
 
 I have collected a range of models based this taxonomy. If you want to contribute this repository and make it better, feel free to contact me. My emial : quanwei.liu@my.jcu.edu.au
 
+
+
+# Nomalization:
+1. MinMax normalization
+$$
+x_i' = \frac{x_i - \min(x)}{\max(x) - \min(x)}
+$$
+
+**特点**：
+- 操作单位：每个通道（维度）
+- 输出范围固定（如 [0, 1]）
+- 保留比例信息（但不保留方向信息）
+- 对极值敏感
+
+2. Unit-norm normalization
+$$
+\mathbf{x'} = \frac{\mathbf{x}}{\|\mathbf{x}\|_2} = \frac{\mathbf{x}}{\sqrt{\sum_i x_i^2}}
+$$
+
+**特点**：
+- 操作单位：每个样本/像素向量
+- 所有向量模长为 1，分量值通常在 [-1, 1] 范围
+- 强调方向信息（如光谱形状）
+- 不保留幅值大小
+> 在高光谱图像处理任务中，单位范数归一化更适合注重“光谱形状”的任务；而 Min-Max 更适合需要统一数值尺度或可视化展示的场景
+
+# Tricks
+- 添加环境变量
+
+```pyhon
+import sys
+sys.path.append('/content/drive/MyDrive/code/MDL/')
+```
+- 更改所用的 GPU
+```pyhon
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(map(str, [0]))
+```
 
 
 Noting: 
