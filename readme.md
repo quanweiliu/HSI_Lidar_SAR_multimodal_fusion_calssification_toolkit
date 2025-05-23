@@ -1,4 +1,4 @@
-# HSI Classification and HSI, SAR, LiDAR Classification
+# HSI Classification and HSI, SAR, LiDAR fusion Classification
 
 # Summary
 | Code      | Paper |  Journal |  Year | 
