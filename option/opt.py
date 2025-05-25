@@ -34,7 +34,7 @@ def get_args():
 
     
     
-    parser.add_argument('--SD',  nargs='+', default=["PaviaU", "Dioni", 'MelasChasma', 'GaleCrater', 'CopratesChasma'], 
+    parser.add_argument('--SD',  nargs='+', default=["PaviaU", "Salinas", "Dioni", 'MelasChasma', 'GaleCrater', 'CopratesChasma'], 
                         help='SingleModality data')
     parser.add_argument('--MD',  nargs='+', default=["Houston_2013", "Houston_2018", "Augsburg", "Berlin"], 
                         help='MultiModality data')

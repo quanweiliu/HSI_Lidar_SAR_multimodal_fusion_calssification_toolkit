@@ -1,4 +1,5 @@
 import torch
+import random
 import numpy as np
 
 
@@ -42,29 +43,53 @@ def sample_gt(gt, train_num=50, train_ratio=0.1, mode='random'):
             train_gt[tuple(train_indices)] = gt[tuple(train_indices)]
             test_gt[tuple(test_indices)] = gt[tuple(test_indices)]
 
-    elif mode == 'ratio':
-        print("split_type: ", mode, "train_ratio: ", train_ratio)
-        for c in np.unique(gt):
-            if c == 0:
-              continue
-            indices = np.nonzero(gt == c)
-            X = list(zip(*indices)) 
-            y = gt[indices].ravel()   
-            np.random.shuffle(X)
+    # elif mode == 'ratio':
+    #     print("split_type: ", mode, "train_ratio: ", train_ratio)
+    #     for c in np.unique(gt):
+    #         if c == 0:
+    #           continue
+    #         indices = np.nonzero(gt == c)
+    #         X = list(zip(*indices)) 
+    #         y = gt[indices].ravel()   
+    #         np.random.shuffle(X)
 
-            train_num = np.ceil(train_ratio * len(y)).astype('int')
-            # print(train_num)
+    #         train_num = np.ceil(train_ratio * len(y)).astype('int')
+    #         # print(train_num)
 
-            train_indices = X[: train_num]
-            test_indices = X[train_num:]
+    #         train_indices = X[: train_num]
+    #         test_indices = X[train_num:]
             
-            train_indices = [list(t) for t in zip(*train_indices)]
-            test_indices = [list(t) for t in zip(*test_indices)]
-            # print("test_indices", test_indices)
+    #         train_indices = [list(t) for t in zip(*train_indices)]
+    #         test_indices = [list(t) for t in zip(*test_indices)]
+    #         # print("test_indices", test_indices)
+
+    #         train_gt[tuple(train_indices)] = gt[tuple(train_indices)]
+    #         test_gt[tuple(test_indices)] = gt[tuple(test_indices)]
+
+
+    elif mode == 'ratio':
+            unique_classes = np.unique(gt)
+            unique_classes = unique_classes[unique_classes != 0]  # skip background (0)
+
+            train_coords = []
+            test_coords = []
+
+            for c in unique_classes:
+                class_coords = list(zip(*np.where(gt == c)))
+                n_total = len(class_coords)
+                n_train = int(np.round(train_ratio * n_total))
+                random.seed(3407)
+                random.shuffle(class_coords)
+                train_coords.extend(class_coords[:n_train])
+                test_coords.extend(class_coords[n_train:])
+
+            train_indices = [list(t) for t in zip(*train_coords)]
+            test_indices = [list(t) for t in zip(*test_coords)]
 
             train_gt[tuple(train_indices)] = gt[tuple(train_indices)]
             test_gt[tuple(test_indices)] = gt[tuple(test_indices)]
 
+            
     # elif mode == 'disjoint':
     #     print("split_type: ", mode, "train_ratio: ", train_ratio)
     #     train_gt = np.copy(gt)

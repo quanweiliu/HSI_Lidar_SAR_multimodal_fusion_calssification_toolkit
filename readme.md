@@ -69,6 +69,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(map(str, [0]))
 Noting: 
 - DBCTNet 不知道为训练很不稳定。 原论文中的 Focal 对于训练稳定性的提升非常重要，用于不用差异非常大。但是即使用了，训练依然很不稳定。差异有10 个百分点，真的很神奇。
 - 每次第一次训练的时候模型效果最好，然后重复训练，效果就大打折扣，很难复现第一次的精度了。又神奇。
+- visualation 和 visualation2 只是采用了不同的可视化方式。
 - MS2CANet : 原始的代码
 - MS2CANet2 : 将代码拆分了两部分，测试精度，结果是一模一样的
 
