@@ -53,39 +53,39 @@ class DataReader():
         
     #     return self.data_cube
 
-    # @property
-    # def normal_cube(self):
-    #     """
-    #     normalization data: range(0, 1)
-    #     """
-    #     self.data_cube = self.data_cube.astype(np.float32)
-
-    #     _, _, l = self.data_cube.shape
-    #     for i in range(l):
-    #         self.data_cube[:, :, i] = (self.data_cube[:, :, i] - self.data_cube[:, :, i].min()) / (self.data_cube[:, :, i].max() - self.data_cube[:, :, i].min())
-        
-    #     return self.data_cube
-
     @property
     def normal_cube(self):
         """
-        Unit-norm normalization / L2 normalization
+        normalization data: range(0, 1)
         """
         self.data_cube = self.data_cube.astype(np.float32)
 
-        m, n, d = self.data_cube.shape
-        self.data_cube = self.data_cube.reshape((m*n, -1))
-        self.data_cube = self.data_cube / self.data_cube.max()
-
-        img_temp = np.sqrt(np.asarray((self.data_cube**2).sum(1)))
-        img_temp = np.expand_dims(img_temp,axis=1)
-        img_temp = img_temp.repeat(d,axis=1)
-        img_temp[img_temp == 0] = 1
-
-        self.data_cube = self.data_cube / img_temp
-        self.data_cube = np.reshape(self.data_cube, (m, n, -1))
-
+        _, _, l = self.data_cube.shape
+        for i in range(l):
+            self.data_cube[:, :, i] = (self.data_cube[:, :, i] - self.data_cube[:, :, i].min()) / (self.data_cube[:, :, i].max() - self.data_cube[:, :, i].min())
+        
         return self.data_cube
+
+    # @property
+    # def normal_cube(self):
+    #     """
+    #     Unit-norm normalization / L2 normalization
+    #     """
+    #     self.data_cube = self.data_cube.astype(np.float32)
+
+    #     m, n, d = self.data_cube.shape
+    #     self.data_cube = self.data_cube.reshape((m*n, -1))
+    #     self.data_cube = self.data_cube / self.data_cube.max()
+
+    #     img_temp = np.sqrt(np.asarray((self.data_cube**2).sum(1)))
+    #     img_temp = np.expand_dims(img_temp,axis=1)
+    #     img_temp = img_temp.repeat(d,axis=1)
+    #     img_temp[img_temp == 0] = 1
+
+    #     self.data_cube = self.data_cube / img_temp
+    #     self.data_cube = np.reshape(self.data_cube, (m, n, -1))
+
+    #     return self.data_cube
 
 class DataReader2():
     def __init__(self):
@@ -117,54 +117,52 @@ class DataReader2():
     #     self.data_cube2 = (self.data_cube2-np.min(self.data_cube2)) / (np.max(self.data_cube2)-np.min(self.data_cube2))
     #     return self.data_cube, self.data_cube2
 
-    # @property
-    # def normal_cube(self):
-    #     """
-    #     normalization data: range(0, 1)
-    #     """
-    #     self.data_cube = self.data_cube.astype(np.float32)
-    #     self.data_cube2 = self.data_cube2.astype(np.float32) 
-
-
-    #     _, _, l = self.data_cube.shape
-    #     for i in range(l):
-    #         self.data_cube[:, :, i] = (self.data_cube[:, :, i] - self.data_cube[:, :, i].min()) / (self.data_cube[:, :, i].max() - self.data_cube[:, :, i].min())
-
-
-    #     _, _, l2 = self.data_cube2.shape
-    #     for i in range(l2):
-    #         self.data_cube2[:, :, i] = (self.data_cube2[:, :, i] - self.data_cube2[:, :, i].min()) / (self.data_cube2[:, :, i].max() - self.data_cube2[:, :, i].min())
-
-    #     return self.data_cube, self.data_cube2
-    
     @property
     def normal_cube(self):
         """
-        Unit-norm normalization / L2 normalization
+        normalization data: range(0, 1)
         """
         self.data_cube = self.data_cube.astype(np.float32)
         self.data_cube2 = self.data_cube2.astype(np.float32) 
 
-        m, n, d = self.data_cube.shape
-        self.data_cube = self.data_cube.reshape((m*n, -1))
-        self.data_cube = self.data_cube / self.data_cube.max()
 
-        img_temp = np.sqrt(np.asarray((self.data_cube**2).sum(1)))
-        img_temp = np.expand_dims(img_temp,axis=1)
-        img_temp = img_temp.repeat(d,axis=1)
-        img_temp[img_temp == 0] = 1
-
-        self.data_cube = self.data_cube / img_temp
-        self.data_cube = np.reshape(self.data_cube, (m, n, -1))
-
+        _, _, l = self.data_cube.shape
+        for i in range(l):
+            self.data_cube[:, :, i] = (self.data_cube[:, :, i] - self.data_cube[:, :, i].min()) / (self.data_cube[:, :, i].max() - self.data_cube[:, :, i].min())
 
 
         _, _, l2 = self.data_cube2.shape
         for i in range(l2):
             self.data_cube2[:, :, i] = (self.data_cube2[:, :, i] - self.data_cube2[:, :, i].min()) / (self.data_cube2[:, :, i].max() - self.data_cube2[:, :, i].min())
 
-
         return self.data_cube, self.data_cube2
+    
+    # @property
+    # def normal_cube(self):
+    #     """
+    #     Unit-norm normalization / L2 normalization
+    #     Min max normalization data: range(0, 1)
+    #     """
+    #     self.data_cube = self.data_cube.astype(np.float32)
+    #     self.data_cube2 = self.data_cube2.astype(np.float32) 
+
+    #     m, n, d = self.data_cube.shape
+    #     self.data_cube = self.data_cube.reshape((m*n, -1))
+    #     self.data_cube = self.data_cube / self.data_cube.max()
+
+    #     img_temp = np.sqrt(np.asarray((self.data_cube**2).sum(1)))
+    #     img_temp = np.expand_dims(img_temp,axis=1)
+    #     img_temp = img_temp.repeat(d,axis=1)
+    #     img_temp[img_temp == 0] = 1
+
+    #     self.data_cube = self.data_cube / img_temp
+    #     self.data_cube = np.reshape(self.data_cube, (m, n, -1))
+
+    #     _, _, l2 = self.data_cube2.shape
+    #     for i in range(l2):
+    #         self.data_cube2[:, :, i] = (self.data_cube2[:, :, i] - self.data_cube2[:, :, i].min()) / (self.data_cube2[:, :, i].max() - self.data_cube2[:, :, i].min())
+
+    #     return self.data_cube, self.data_cube2
 
 
 

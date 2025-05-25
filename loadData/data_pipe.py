@@ -25,8 +25,12 @@ def get_data(args):
     if args.dataset_name in args.SD:
         data, GT = data_reader.load_data(args.dataset_name, path_data=args.path_data, type_data=None)
         # print("data", data.shape, "data_gt", data_gt.shape)
-        
-        patch_size = args.patch_size
+
+
+        if args.backbone in args.MMISO or args.backbone in args.MMIMO:
+            patch_size = args.patch_size * 3
+        else:
+            patch_size = args.patch_size
         pad_width = (patch_size // 2) + 1
         # pad_width = patch_size // 2
 
@@ -60,23 +64,12 @@ def get_data(args):
             plt.tight_layout(pad=0)  # 去除额外空白边距
             plt.show()
 
-        # obtain label
-        # train_label, test_label = [], []
-        # for i in range(pad_width, train_gt.shape[0]-pad_width):
-        #     for j in range(pad_width, train_gt.shape[1]-pad_width):
-        #         if train_gt[i][j]:
-        #             train_label.append(train_gt[i][j])
-
-        # for i in range(pad_width, test_gt.shape[0]-pad_width):
-        #     for j in range(pad_width, test_gt.shape[1]-pad_width):
-        #         if test_gt[i][j]:
-        #             test_label.append(test_gt[i][j])
-        
         if args.print_data_info:
             print("print_data_info : ---->")
             data_reader.data_info(train_gt, val_gt, test_gt, start=args.data_info_start)
 
-        return img, train_gt, val_gt, test_gt, data_gt, GT
+        # return img, train_gt, val_gt, test_gt, data_gt, GT
+        return img, img, train_gt, val_gt, test_gt, data_gt, GT
 
 
     elif args.dataset_name in args.MD:
@@ -117,7 +110,7 @@ def get_data(args):
             plt.tight_layout(pad=0)  # 去除额外空白边距
             plt.show()
 
-        data_gt = np.pad(data_gt, pad_width=pad_width, mode="constant", constant_values=(0))
+        data_gt = np.pad(GT, pad_width=pad_width, mode="constant", constant_values=(0))
         train_gt = np.pad(train_gt, pad_width=pad_width, mode="constant", constant_values=(0))
         test_gt = np.pad(test_gt, pad_width=pad_width, mode="constant", constant_values=(0))
 
@@ -129,25 +122,6 @@ def get_data(args):
                                 train_ratio=1, mode="ratio")   
         # print("train_gt", train_gt.shape, "test_gt", test_gt.shape)
 
-        # obtain label
-        # train_label, test_label = [], []
-        # for i in range(pad_width, train_gt.shape[0]-pad_width):
-        #     for j in range(pad_width, train_gt.shape[1]-pad_width):
-        #         if train_gt[i][j]:
-        #             train_label.append(train_gt[i][j])
-
-
-        # for i in range(pad_width, val_gt.shape[0]-pad_width):
-        #     for j in range(pad_width, val_gt.shape[1]-pad_width):
-        #         if val_gt[i][j]:
-        #             train_label.append(val_gt[i][j])
-
-
-        # for i in range(pad_width, test_gt.shape[0]-pad_width):
-        #     for j in range(pad_width, test_gt.shape[1]-pad_width):
-        #         if test_gt[i][j]:
-        #             test_label.append(test_gt[i][j])
-        
         if args.print_data_info:
             print("print_data_info : ---->")
             data_reader.data_info(train_gt, val_gt, test_gt, start=args.data_info_start)
@@ -290,8 +264,8 @@ class HyperXMM(torch.utils.data.Dataset):
         self.indices = np.array(
             [
                 (x, y) for x, y in zip(x_pos, y_pos)
-                # if x > p and x < data.shape[0] - p and y > p and y < data.shape[1] - p
-                if x >= p and x < data1.shape[0] - p and y >= p and y < data1.shape[1] - p
+                if x > p and x < data1.shape[0] - p - 1 and y > p and y < data1.shape[1] - p - 1
+                # if x >= p and x < data1.shape[0] - p and y >= p and y < data1.shape[1] - p
             ]
         )
         self.labels = [self.label[x, y] for x, y in self.indices]
