@@ -215,7 +215,7 @@ elif args.backbone == "SSFTTnet":
     print("model", "SSFTTnet")
 
 elif args.backbone == "morphFormer":
-    model = morphFormer.CNN(args.FM, data1_bands, class_num, args.HSIOnly, patchsize=args.patch_size).to(args.device)
+    model = morphFormer.CNN(args.FM, data1_bands, class_num, patchsize=args.patch_size).to(args.device)
     params = model.parameters()
     print("model", "SSFTTnet")
 

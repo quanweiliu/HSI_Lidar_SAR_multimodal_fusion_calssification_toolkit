@@ -253,10 +253,9 @@ class CrossAttentionBlock(nn.Module):
 
 
 class CNN(nn.Module):
-    def __init__(self, FM, NC, Classes, HSIOnly, patchsize):#(16,144,15,False)
+    def __init__(self, FM, NC, Classes, patchsize):       # (16,144,15,False)
         super(CNN, self).__init__()
         self.patchsize = patchsize
-        self.HSIOnly = HSIOnly
         self.conv5 = nn.Sequential(
             nn.Conv3d(1, 8, (9, 3, 3), padding=(0,1,1), stride = 1),
             nn.BatchNorm3d(8),
@@ -323,10 +322,9 @@ if __name__ == '__main__':
     FM = 16
     NC = 102
     Classes =  15
-    HSIOnly = False
     patchsize = 13
 
-    model = CNN(FM, NC, Classes, HSIOnly, patchsize)
+    model = CNN(FM, NC, Classes, patchsize)
     model.eval()
     # print(model)
     # input = torch.randn(64, 1, 30, 13, 13)

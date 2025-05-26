@@ -88,7 +88,6 @@ def get_model_config(args):
 		args.learning_rate = 5e-4
 		args.weight_decay = 5e-3
 		args.FM = 16
-		args.HSIOnly = True
 		args.testSizeNumber = 100
 		args.schedule = True
 		args.step_size = 50
