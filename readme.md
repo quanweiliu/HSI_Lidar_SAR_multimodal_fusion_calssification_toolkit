@@ -72,6 +72,7 @@ Noting:
 - visualation 和 visualation2 只是采用了不同的可视化方式。
 - MS2CANet : 原始的代码
 - MS2CANet2 : 将代码拆分了两部分，测试精度，结果是一模一样的
+- 这里 train_loss 是总样本数的平均损失，test_loss 一个 epoch 测试样本的总损失。
 
 
 

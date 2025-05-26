@@ -63,6 +63,7 @@ def train_SD_SSISO(epoch, net, net_head, criterion, train_loader, test_loader, t
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     # train_bar = tqdm(train_loader)
     
     start_time = time.time()
@@ -83,9 +84,11 @@ def train_SD_SSISO(epoch, net, net_head, criterion, train_loader, test_loader, t
         loss.backward()
         train_optimizer.step()
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
-
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
     if epoch % args.log_interval == 0:
         net.eval()
@@ -121,6 +124,7 @@ def train_SD_SSISO2(epoch, net, criterion, train_loader, test_loader, train_opti
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     # train_bar = tqdm(train_loader)
     
     start_time = time.time()
@@ -140,9 +144,11 @@ def train_SD_SSISO2(epoch, net, criterion, train_loader, test_loader, train_opti
         loss.backward()
         train_optimizer.step()
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
-
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
     if epoch % args.log_interval == 0:
         net.eval()
@@ -177,6 +183,7 @@ def train_SSISO(epoch, net, net_head, criterion, train_loader, test_loader, trai
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     # train_bar = tqdm(train_loader)
     
     start_time = time.time()
@@ -196,9 +203,11 @@ def train_SSISO(epoch, net, net_head, criterion, train_loader, test_loader, trai
         loss.backward()
         train_optimizer.step()
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
-
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
     if epoch % args.log_interval == 0:
         net.eval()
@@ -298,6 +307,7 @@ def train_SMIMO(epoch, net, superhead, criterion, train_loader, test_loader, opt
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     # train_bar = tqdm(train_loader)
 
     start_time = time.time()
@@ -322,13 +332,16 @@ def train_SMIMO(epoch, net, superhead, criterion, train_loader, test_loader, opt
         loss.backward()
         optimizer.step()
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
         # pred = torch.max(out, 1)[1].squeeze()
         pred = out.data.max(1, keepdim=True)[1]
         train_correct += pred.eq(label.data.view_as(pred)).sum()
         train_accuracy = 100. * train_correct.item() / len(train_loader.dataset)
 
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
     if epoch % args.log_interval == 0:
         net.eval()
@@ -367,6 +380,7 @@ def train_SMIMO2(epoch, net, criterion, train_loader, test_loader, optimizer, ar
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     # train_bar = tqdm(train_loader)
 
     start_time = time.time()
@@ -388,13 +402,16 @@ def train_SMIMO2(epoch, net, criterion, train_loader, test_loader, optimizer, ar
         loss.backward()
         optimizer.step()
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
         # pred = torch.max(out, 1)[1].squeeze()
         pred = out1.data.max(1, keepdim=True)[1]
         train_correct += pred.eq(label.data.view_as(pred)).sum()
         train_accuracy = (100. * train_correct / len(train_loader.dataset)).item()
 
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
     if epoch % args.log_interval == 0:
         net.eval()
@@ -431,6 +448,7 @@ def train_SMIMO3(epoch, net, criterion, train_loader, test_loader, optimizer, ar
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     # train_bar = tqdm(train_loader)
 
     start_time = time.time()
@@ -452,13 +470,16 @@ def train_SMIMO3(epoch, net, criterion, train_loader, test_loader, optimizer, ar
         loss.backward()
         optimizer.step()
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
         # pred = torch.max(out, 1)[1].squeeze()
         pred = out1.data.max(1, keepdim=True)[1]
         train_correct += pred.eq(label.data.view_as(pred)).sum()
         train_accuracy = (100. * train_correct / len(train_loader.dataset)).item()
 
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
     if epoch % args.log_interval == 0:
         net.eval()
@@ -497,6 +518,7 @@ def train_SMISO(epoch, net, criterion, train_loader, test_loader, optimizer, arg
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     # train_bar = tqdm(train_loader)
 
     start_time = time.time()
@@ -514,15 +536,16 @@ def train_SMISO(epoch, net, criterion, train_loader, test_loader, optimizer, arg
         loss.backward()
         optimizer.step()
 
-
         # pred = torch.max(out, 1)[1].squeeze()
         pred = out.data.max(1, keepdim=True)[1]
         train_correct += pred.eq(label.data.view_as(pred)).sum()
         train_accuracy = 100. * train_correct.item() / len(train_loader.dataset)
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
-
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
     if epoch % args.log_interval == 0:
         net.eval()
@@ -559,6 +582,7 @@ def train_MMISO(epoch, net, criterion, train_loader, test_loader, optimizer, arg
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     # train_bar = tqdm(train_loader)
 
     start_time = time.time()
@@ -584,9 +608,11 @@ def train_MMISO(epoch, net, criterion, train_loader, test_loader, optimizer, arg
         train_correct += pred.eq(label.data.view_as(pred)).sum()
         train_accuracy = 100. * train_correct.item() / len(train_loader.dataset)
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
-
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
     if epoch % args.log_interval == 0:
         net.eval()
@@ -636,6 +662,7 @@ def train_MMIMO(epoch, net, criterion, train_loader, test_loader, optimizer, arg
     test_correct = 0
     total_train_loss = 0
     total_test_loss = 0
+    total_samples = 0
     lambda3 = 0.3
     lambda4 = 1
     lambda1 = 5
@@ -687,15 +714,17 @@ def train_MMIMO(epoch, net, criterion, train_loader, test_loader, optimizer, arg
         loss.backward()
         optimizer.step()
 
-        total_train_loss += loss.item()  # 累计 batch 的损失
-
         # pred = torch.max(out, 1)[1].squeeze()
         pred = batch_pred.data.max(1, keepdim=True)[1]
         train_correct += pred.eq(label.data.view_as(pred)).sum()
         train_accuracy = 100. * train_correct.item() / len(train_loader.dataset)
         total_loss += loss.item()  # 累计 batch 的损失
         
-    average_train_loss = total_train_loss / len(train_loader)
+        # total_train_loss += loss.item()  # 累计 batch 的损失
+        total_train_loss += loss.item() * label.size(0)   #  上面的 loss 默认已经计算了平均值
+        total_samples += label.size(0)
+    average_train_loss = total_train_loss / total_samples
+    # average_train_loss = total_train_loss / len(train_loader)
 
 
     if epoch % args.log_interval == 0:
