@@ -99,17 +99,6 @@ def get_data(args):
         else:
             print("pca is not used")
 
-        if args.show_gt:
-            # data_reader.draw(data_gt, args.result_dir + "/" + args.dataset_name + "data_gt", save_img=True)
-            plt.figure(figsize=(12, 8))
-            # spl.imshow(classes=GT)
-            spl.imshow(classes=train_gt)
-            # spl.imshow(classes=test_gt)
-            # plt.imshow()
-            plt.axis('off')  # 关闭坐标轴（等效于关闭刻度和边框）
-            plt.tight_layout(pad=0)  # 去除额外空白边距
-            plt.show()
-
         data_gt = np.pad(GT, pad_width=pad_width, mode="constant", constant_values=(0))
         train_gt = np.pad(train_gt, pad_width=pad_width, mode="constant", constant_values=(0))
         test_gt = np.pad(test_gt, pad_width=pad_width, mode="constant", constant_values=(0))
@@ -121,6 +110,19 @@ def get_data(args):
         test_gt, _ = sample_gt(test_gt, train_num=args.train_num, 
                                 train_ratio=1, mode="ratio")   
         # print("train_gt", train_gt.shape, "test_gt", test_gt.shape)
+
+
+        if args.show_gt:
+            # data_reader.draw(data_gt, args.result_dir + "/" + args.dataset_name + "data_gt", save_img=True)
+            plt.figure(figsize=(12, 8))
+            # spl.imshow(classes=GT)
+            spl.imshow(classes=train_gt)
+            # spl.imshow(classes=test_gt)
+            # plt.imshow()
+            plt.axis('off')  # 关闭坐标轴（等效于关闭刻度和边框）
+            plt.tight_layout(pad=0)  # 去除额外空白边距
+            plt.show()
+
 
         if args.print_data_info:
             print("print_data_info : ---->")

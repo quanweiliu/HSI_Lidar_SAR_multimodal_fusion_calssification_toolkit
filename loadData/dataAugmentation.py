@@ -27,11 +27,11 @@ class GaussianBlur(object):
         )
 
 
-def dataAugmentation(randCrop=28):
+def dataAugmentation(args):
 
     transform = transforms.Compose([
         # transforms.RandomCrop(randCrop, padding=4),  # 在 32x32 的图像上进行随机裁剪（加 4 像素填充）
-        transforms.RandomCrop(randCrop),  # 在 32x32 的图像上进行随机裁剪（加 4 像素填充）
+        transforms.RandomCrop(args.randomCrop),  # 在 32x32 的图像上进行随机裁剪（加 4 像素填充）
         transforms.RandomHorizontalFlip(p=0.5),  # 50% 概率水平翻转
         transforms.RandomVerticalFlip(p=0.5),
         # transforms.GaussianBlur((3)),

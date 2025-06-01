@@ -16,8 +16,8 @@ def visualation_SD_SSISO(net, net_head, data_loader, args, groundTruth=None, vis
     net.eval()
     net_head.eval()
     with torch.no_grad():
-        for data, target in data_loader:
-        # for data, _, target in data_loader:
+        # for data, target in data_loader:
+        for data, _, target in data_loader:
             target = target - 1
             data = data.to(args.device)
             target = target.to(args.device)

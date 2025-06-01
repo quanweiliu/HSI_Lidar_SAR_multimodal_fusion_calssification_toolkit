@@ -53,7 +53,6 @@ class ConvBNReLU(nn.Module):
         return x
     
 
-
 class Model_base(nn.Module):
     def __init__(self, input_dim, backbone='resnet18', is_pretrained=False):
         super(Model_base, self).__init__()
@@ -91,8 +90,9 @@ class Model_base(nn.Module):
         xe2 = self.encoder2(xe1)
         xe3 = self.encoder3(xe2)
         xe4 = self.encoder4(xe3)
-
+        # print(xe4.shape)          # 128, 512, 4, 4
         out = self.avgpool(xe4)
+        # print(out.shape)          # 128, 512, 1, 1
         out = torch.flatten(out, start_dim=1)
 
         return out
